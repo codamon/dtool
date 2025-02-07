@@ -1,11 +1,13 @@
 "use client";
 import { CircularProgress } from '@mui/material';
-import WorldClockCard from './components/WorldClock/WorldClockCard';
-import { useWorldClock } from './components/WorldClock/useWorldClock';
-import { DndProvider } from './components/DndProvider';
+import WorldClockCard from '../components/WorldClock/WorldClockCard';
+import { useWorldClock } from '../components/WorldClock/useWorldClock';
+import { DndProvider } from '../components/DndProvider';
+import { useTranslations } from 'next-intl';
 import { useCallback, useState, useEffect } from 'react';
 
 export default function Home() {
+  const t = useTranslations('weather');
   const { cityData, loading, error } = useWorldClock();
   const [cards, setCards] = useState<typeof cityData>([]);
 
@@ -63,7 +65,7 @@ export default function Home() {
   return (
     <DndProvider>
       <div className="p-4 space-y-4">
-        <h1 className="text-2xl font-bold mb-6">世界时钟 & 天气</h1>
+        <h1 className="text-2xl font-bold mb-6">{t('title')}</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {cards.map((city, index) => (
             <WorldClockCard 
@@ -77,4 +79,4 @@ export default function Home() {
       </div>
     </DndProvider>
   );
-}
+} 

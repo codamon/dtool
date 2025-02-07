@@ -1,0 +1,23 @@
+{
+  "header": {
+    "title": "天气时钟",
+    "github": "GitHub"
+  },
+  "footer": {
+    "rights": "版权所有",
+    "about": "关于",
+    "privacy": "隐私政策"
+  },
+  "weather": {
+    "title": "世界时钟 & 天气",
+    "current": "今日天气",
+    "tomorrow": "明日天气",
+    "temperature": "当前温度",
+    "range": "温度区间",
+    "condition": "天气"
+  },
+  "languages": {
+    "en": "英文",
+    "zh": "中文"
+  }
+} 

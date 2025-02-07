@@ -1,0 +1,23 @@
+{
+  "header": {
+    "title": "Weather Clock",
+    "github": "GitHub"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "about": "About",
+    "privacy": "Privacy Policy"
+  },
+  "weather": {
+    "title": "World Clock & Weather",
+    "current": "Current Weather",
+    "tomorrow": "Tomorrow's Weather",
+    "temperature": "Temperature",
+    "range": "Temperature Range",
+    "condition": "Condition"
+  },
+  "languages": {
+    "en": "English",
+    "zh": "Chinese"
+  }
+} 
