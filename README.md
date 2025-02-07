@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# World Clock & Weather
+
+A modern world clock and weather application built with Next.js 14.
+
+## Features
+
+- 🌍 Display current time and weather for multiple cities
+- 🌤️ Real-time weather info and tomorrow's forecast
+- 🎯 Draggable clock cards with persistent order
+- 🌐 English and Chinese language support
+- 💾 Auto-save card arrangement
+- 🎨 Responsive design for mobile and desktop
+- ⚡ Real-time clock updates
+
+## Tech Stack
+
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- React DnD
+- next-intl
+- OpenWeather API
 
 ## Getting Started
 
-First, run the development server:
-
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [repository-url]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+Create a `.env.local` file and add:
+```bash
+NEXT_PUBLIC_WEATHER_API_KEY=your_openweather_api_key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Start the development server:
+```bash
+npm run dev
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000)
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/
+├── [locale]/           # Localized routes
+│   ├── layout.tsx     # Locale layout
+│   └── page.tsx       # Main page
+├── components/         # React components
+│   ├── WorldClock/    # Clock components
+│   └── ...           # Other components
+├── i18n/              # Internationalization
+├── lib/               # Utilities and API
+└── messages/          # Translation files
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Internationalization
 
-## Deploy on Vercel
+The app supports English and Chinese languages. Language files are located in the `messages/` directory.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Weather Data
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Weather information is fetched from OpenWeather API, including:
+- Current temperature
+- Temperature range
+- Weather conditions
+- Tomorrow's forecast
+
+## Development
+
+- Built with Next.js 14 App Router
+- Uses Server Components and Client Components
+- Implements drag-and-drop functionality
+- Features smooth animations with Framer Motion
+
+## License
+
+MIT
