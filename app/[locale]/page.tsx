@@ -12,17 +12,17 @@ export default function Home() {
   const [cards, setCards] = useState<typeof cityData>([]);
 
   useEffect(() => {
-    // 尝试从 localStorage 获取保存的顺序
+    // Try to get saved order from localStorage
     const savedOrder = localStorage.getItem('cardOrder');
     if (savedOrder && cityData.length > 0) {
-      // 使用保存的顺序重新排列卡片
+      // Rearrange cards using saved order
       const orderIndices = JSON.parse(savedOrder);
       const orderedCards = orderIndices
         .map((name: string) => cityData.find(card => card.name === name))
         .filter(Boolean);
       setCards(orderedCards);
     } else {
-      // 如果没有保存的顺序，使用默认顺序
+      // If no saved order exists, use default order
       setCards(cityData);
     }
   }, [cityData]);
@@ -35,7 +35,7 @@ export default function Home() {
       if (dragCard) {
         newCards.splice(dragIndex, 1);
         newCards.splice(hoverIndex, 0, dragCard);
-        // 保存新的顺序到 localStorage
+        // Save new order to localStorage
         localStorage.setItem('cardOrder', 
           JSON.stringify(newCards.map(card => card.name))
         );

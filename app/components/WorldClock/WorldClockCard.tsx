@@ -54,18 +54,18 @@ const WorldClockCard: React.FC<WorldClockCardProps> = ({
       const hoverIndex = index;
       if (dragIndex === hoverIndex) return;
 
-      // 获取拖动元素的边界
+      // Get dragged element boundaries
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      // 获取中点
+      // Get middle point
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      // 获取鼠标位置
+      // Get mouse position
       const clientOffset = monitor.getClientOffset();
-      // 获取鼠标距离卡片顶部的距离
+      // Get mouse distance from card top
       const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
 
-      // 向上拖动时，只在超过中点时移动
+      // When dragging up, only move when past the middle
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
-      // 向下拖动时，只在超过中点时移动
+      // When dragging down, only move when past the middle
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
 
       moveCard(dragIndex, hoverIndex);
