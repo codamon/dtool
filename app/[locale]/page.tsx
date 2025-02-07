@@ -67,6 +67,8 @@ export default function Home() {
 
   return (
     <DndProvider>
+      {/* 拖拽预览层 */}
+      <div style={{ position: 'fixed', pointerEvents: 'none', zIndex: 100 }} />
       <div className="p-4 space-y-4">
         <h1 className="text-2xl font-bold mb-6">{t('title')}</h1>
         <LayoutGroup>
@@ -74,17 +76,27 @@ export default function Home() {
             {cards.map((city, index) => (
               <motion.div
                 key={city.name}
-                className="transform transition-all duration-300"
+                className="transform"
                 layout
+                layoutId={city.name}
                 transition={{
+                  // 布局动画配置
                   layout: {
-                    type: "spring",
-                    bounce: 0.15,
-                    duration: 1000,
-                    damping: 20,
-                    stiffness: 200
+                    type: "spring",    // 使用弹簧动画
+                    bounce: 0.15,      // 减小弹跳系数使动画更平滑
+                    duration: 0.6,     // 动画持续时间(秒)
+                    damping: 25,       // 增加阻尼使动画更平滑
+                    stiffness: 250     // 降低刚度使动画更自然
                   }
                 }}
+                initial={false}
+                animate={{
+                  scale: 1,
+                  opacity: 1
+                }}
+                drag={false}           // 禁用原生拖拽以避免冲突
+                dragConstraints={false}
+                dragElastic={0}
               >
                 <WorldClockCard 
                   {...city}
