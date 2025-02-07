@@ -3,6 +3,7 @@ import { Clock } from 'lucide-react';
 import { WeatherIcon } from '../WeatherIcon';
 import { useDrag, useDrop } from 'react-dnd';
 import { useTranslations } from 'next-intl';
+import { motion } from 'framer-motion';
 
 const CARD_TYPE = 'CLOCK_CARD';
 
@@ -37,6 +38,9 @@ const WorldClockCard: React.FC<WorldClockCardProps> = ({
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const t = useTranslations('weather');
+  const tc = useTranslations('cities');
+
+  const cityKey = name.toLowerCase();
 
   const [{ isDragging }, drag] = useDrag({
     type: CARD_TYPE,
@@ -56,17 +60,18 @@ const WorldClockCard: React.FC<WorldClockCardProps> = ({
 
       // Get dragged element boundaries
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      // Get middle point
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      // Get mouse position
-      const clientOffset = monitor.getClientOffset();
-      // Get mouse distance from card top
-      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
-
-      // When dragging up, only move when past the middle
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
-      // When dragging down, only move when past the middle
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
+      const mousePosition = monitor.getClientOffset();
+      if (!mousePosition) return;
+      
+      // Get mouse position relative to the hovered card
+      const mouseX = mousePosition.x - hoverBoundingRect.left;
+      const cardWidth = hoverBoundingRect.width;
+      
+      // Define the left side threshold (e.g., 30% of card width)
+      const leftThreshold = cardWidth * 0.3;
+      
+      // Only trigger when mouse is in the left side of a different card
+      if (dragIndex === hoverIndex || mouseX > leftThreshold) return;
 
       moveCard(dragIndex, hoverIndex);
       item.index = hoverIndex;
@@ -76,13 +81,27 @@ const WorldClockCard: React.FC<WorldClockCardProps> = ({
   const dragDropRef = drag(drop(ref));
 
   return (
-    <div 
+    <motion.div 
       ref={ref}
       className={`rounded-lg border bg-card text-card-foreground shadow-lg cursor-move
-        ${isDragging ? 'opacity-50' : 'opacity-100'}`}
+        ${isDragging ? 'opacity-50 z-50' : 'opacity-100'}
+        transform transition-transform duration-300 ease-in-out`}
+      layout
+      style={{
+        position: isDragging ? 'relative' : 'static',
+      }}
+      whileHover={{ scale: isDragging ? 1.02 : 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{
+        type: "spring",
+        bounce: 0.15,
+        duration: 0.5,
+        damping: 20,
+        stiffness: 200
+      }}
     >
       <div className="flex flex-row items-center justify-between p-6 pb-2">
-        <h3 className="text-xl font-bold">{name}</h3>
+        <h3 className="text-xl font-bold">{tc(cityKey.toLowerCase())}</h3>
         <Clock className="h-6 w-6 text-gray-500" />
       </div>
       <div className="p-6 pt-2">
@@ -120,7 +139,7 @@ const WorldClockCard: React.FC<WorldClockCardProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

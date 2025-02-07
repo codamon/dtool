@@ -4,7 +4,6 @@ import "../globals.css";
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { NextIntlClientProvider } from 'next-intl';
-import { getTranslations } from 'next-intl/server';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,26 +22,23 @@ export const metadata: Metadata = {
 
 export default async function LocaleLayout({
   children,
-  params: { locale }
+  params,
 }: {
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  const { locale } = await Promise.resolve(params);
   const messages = (await import(`../../messages/${locale}.json`)).default;
 
   return (
-    <html lang={locale}>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NextIntlClientProvider messages={messages} locale={locale}>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages} locale={locale}>
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-grow">
+          {children}
+        </main>
+        <Footer />
+      </div>
+    </NextIntlClientProvider>
   );
 } 

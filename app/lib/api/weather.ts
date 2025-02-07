@@ -104,7 +104,6 @@ export async function fetchWeather(city: string): Promise<WeatherData> {
       tomorrowDescription: tomorrowNoon?.weather[0].description ?? '暂无数据'
     };
   } catch (error) {
-    console.error('获取天气数据失败:', error);
     return {
       temperature: 0,
       tempMin: 0,

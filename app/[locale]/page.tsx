@@ -5,6 +5,7 @@ import { useWorldClock } from '../components/WorldClock/useWorldClock';
 import { DndProvider } from '../components/DndProvider';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState, useEffect } from 'react';
+import { motion, LayoutGroup } from 'framer-motion';
 
 export default function Home() {
   const t = useTranslations('weather');
@@ -12,15 +13,17 @@ export default function Home() {
   const [cards, setCards] = useState<typeof cityData>([]);
 
   useEffect(() => {
+    if (!cityData || cityData.length === 0) return;
+    
     // Try to get saved order from localStorage
     const savedOrder = localStorage.getItem('cardOrder');
     if (savedOrder && cityData.length > 0) {
       // Rearrange cards using saved order
       const orderIndices = JSON.parse(savedOrder);
       const orderedCards = orderIndices
-        .map((name: string) => cityData.find(card => card.name === name))
+        .map((code: string) => cityData.find(card => card.code === code))
         .filter(Boolean);
-      setCards(orderedCards);
+      setCards(orderedCards.length === cityData.length ? orderedCards : cityData);
     } else {
       // If no saved order exists, use default order
       setCards(cityData);
@@ -37,7 +40,7 @@ export default function Home() {
         newCards.splice(hoverIndex, 0, dragCard);
         // Save new order to localStorage
         localStorage.setItem('cardOrder', 
-          JSON.stringify(newCards.map(card => card.name))
+          JSON.stringify(newCards.map(card => card.code))
         );
       }
       return newCards;
@@ -66,16 +69,32 @@ export default function Home() {
     <DndProvider>
       <div className="p-4 space-y-4">
         <h1 className="text-2xl font-bold mb-6">{t('title')}</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {cards.map((city, index) => (
-            <WorldClockCard 
-              key={city.name} 
-              {...city}
-              index={index}
-              moveCard={moveCard}
-            />
-          ))}
-        </div>
+        <LayoutGroup>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 relative">
+            {cards.map((city, index) => (
+              <motion.div
+                key={city.name}
+                className="transform transition-all duration-300"
+                layout
+                transition={{
+                  layout: {
+                    type: "spring",
+                    bounce: 0.15,
+                    duration: 1000,
+                    damping: 20,
+                    stiffness: 200
+                  }
+                }}
+              >
+                <WorldClockCard 
+                  {...city}
+                  index={index}
+                  moveCard={moveCard}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </LayoutGroup>
       </div>
     </DndProvider>
   );

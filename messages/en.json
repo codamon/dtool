@@ -16,6 +16,12 @@
     "range": "Temperature Range",
     "condition": "Condition"
   },
+  "cities": {
+    "auckland": "Auckland",
+    "wanzhou": "Wanzhou",
+    "chengdu": "Chengdu",
+    "huludao": "Huludao"
+  },
   "languages": {
     "en": "English",
     "zh": "Chinese"

@@ -16,6 +16,12 @@
     "range": "温度区间",
     "condition": "天气"
   },
+  "cities": {
+    "auckland": "奥克兰",
+    "wanzhou": "万州",
+    "chengdu": "成都",
+    "huludao": "葫芦岛"
+  },
   "languages": {
     "en": "英文",
     "zh": "中文"

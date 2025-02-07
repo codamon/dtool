@@ -20,17 +20,16 @@ interface CityData extends City {
 }
 
 const CITIES: City[] = [
-  { name: '奥克兰', timezone: 'Pacific/Auckland', code: 'Auckland' },
-  { name: '万州', timezone: 'Asia/Shanghai', code: 'Wanzhou' },
-  { name: '成都', timezone: 'Asia/Shanghai', code: 'Chengdu' },
-  { name: '葫芦岛', timezone: 'Asia/Shanghai', code: 'Huludao' }
+  { name: 'Auckland', timezone: 'Pacific/Auckland', code: 'Auckland' },
+  { name: 'Wanzhou', timezone: 'Asia/Shanghai', code: 'Wanzhou' },
+  { name: 'Chengdu', timezone: 'Asia/Shanghai', code: 'Chengdu' },
+  { name: 'Huludao', timezone: 'Asia/Shanghai', code: 'Huludao' }
 ];
 
 export const useWorldClock = () => {
   const [cityData, setCityData] = useState<CityData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
     const updateCityData = async () => {
@@ -64,7 +63,7 @@ export const useWorldClock = () => {
         setCityData(updatedCities);
         setLoading(false);
       } catch (err) {
-        setError('获取数据失败');
+        setError('Failed to fetch data');
         setLoading(false);
       }
     };
